@@ -1,0 +1,37 @@
+#' Ionosphere dataset
+#'
+#' This dataset was collected by a radar system and consists of phased array of 16
+#' high-frequency antennas with a total transmitted power of the order of 6.4 kilowatts.
+#' The targets were free electrons in the ionosphere. "Good" radar returns are those
+#' showing evidence of some type of structure in the ionosphere. "Bad" returns are those
+#' that do not.  There are 351 instances and 34 numeric attributes. The first 175
+#' instances are training data, the rest are test data. This version of dataset was
+#' used by Zouhal and Denoeux (1998).
+#'
+#' @docType data
+#'
+#' @usage data(ionosphere)
+#'
+#' @format A list with two elements:
+#' \describe{
+#' \item{x}{The 351 x 18 object-attribute matrix.}
+#' \item{y}{A 351-vector containing the class labels.}
+#' }
+#'
+#' @keywords datasets
+#'
+#' @references
+#'
+#' P. M.  Murphy and D. W. Aha.  UCI Reposition of machine learning databases.
+#' [Machine readable data repository]. University of California, Departement of
+#' Information and Computer Science, Irvine, CA.
+#'
+#' L. M. Zouhal and T. Denoeux. An evidence-theoretic k-NN rule with parameter
+#' optimization. IEEE Transactions on Systems, Man and Cybernetics Part C,
+#' 28(2):263--271,1998.
+#'
+#'
+#' @examples
+#' data(ionosphere)
+#' table(vehicles$y)
+"ionosphere"
