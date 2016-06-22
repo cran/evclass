@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Thierry Denoeux" />
+
+<meta name="date" content="2016-06-22" />
+
+<title>Introduction to the evclass package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to the evclass package</h1>
+<h4 class="author"><em>Thierry Denoeux</em></h4>
+<h4 class="date"><em>2016-06-22</em></h4>
+
+
+
+<p>The package <code>evclass</code> contains methods for <em>evidential classification</em>. An evidential classifier quantifies the uncertainty about the class of a pattern by a Dempster-Shafer mass function. In evidential <em>distance-based</em> classifiers, the mass functions are computed from distances between the test pattern and either training pattern, or prototypes. The user is invited to read the papers cited in this vignette to get familiar with the main concepts underlying evidential clustering. These papers can be downloaded from the author’s web site, at <a href="https://www.hds.utc.fr/~tdenoeux" class="uri">https://www.hds.utc.fr/~tdenoeux</a>. Here, we provide a short guided tour of the main functions in the <code>evclass</code> package. The two classification methods implemented to date ate:</p>
+<ul>
+<li>The evidential K-nearest neighbor classifier <span class="citation">(Denœux 1995,<span class="citation">Zouhal and Denœux (1998)</span>)</span>;</li>
+<li>The evidential neural network classifier <span class="citation">(Denœux 2000)</span>.</li>
+</ul>
+<p>You first need to install this package:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(evclass)</code></pre></div>
+<p>The following sections contain a brief introduction on the way to use the functions in the package <code>evclass</code> for evidential classification.</p>
+<div id="evidential-k-nearest-neighbor-classifier" class="section level2">
+<h2>Evidential K-nearest neighbor classifier</h2>
+<p>The principle of the evidential K-nearest neighbor (EK-NN) classifier is explained in <span class="citation">(Denœux 1995)</span>, and the optimization of the parameters of this model is presented in <span class="citation">(Zouhal and Denœux 1998)</span>. The reader is referred to these references. Here, we focus on the practical application of this method using the functions implemented in <code>evclass</code>.</p>
+<p>Consider, for instance, the <code>ionosphere</code> data. This dataset consists in 351 instances grouped in two classes and described by 34 numeric attributes. The first 175 instances are training data, the rest are test data. Let us first load the data, and split them into a training set and a test set.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(ionosphere)
+xtr&lt;-ionosphere$x[<span class="dv">1</span>:<span class="dv">176</span>,]
+ytr&lt;-ionosphere$y[<span class="dv">1</span>:<span class="dv">176</span>]
+xtst&lt;-ionosphere$x[<span class="dv">177</span>:<span class="dv">351</span>,]
+ytst&lt;-ionosphere$y[<span class="dv">177</span>:<span class="dv">351</span>]</code></pre></div>
+<p>The EK-NN classifier is implemented as three functions: <code>EkNNinit</code> for initialization, <code>EkNNfit</code> for training, and <code>EkNNval</code> for testing. Let us initialize the classifier and train it on the <code>ionosphere</code> data, with <span class="math inline">\(K=5\)</span> neighbors. (If the argument <code>param</code> is not passed to <code>EkNNfit</code>, the function <code>EkNNinit</code> is called inside <code>EkNNfit</code>; here, we make the call explicit for clarity).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">param0&lt;-<span class="st"> </span><span class="kw">EkNNinit</span>(xtr,ytr)
+options=<span class="kw">list</span>(<span class="dt">maxiter=</span><span class="dv">300</span>,<span class="dt">eta=</span><span class="fl">0.1</span>,<span class="dt">gain_min=</span><span class="fl">1e-5</span>,<span class="dt">disp=</span><span class="ot">FALSE</span>)
+fit&lt;-<span class="kw">EkNNfit</span>(xtr,ytr,<span class="dt">param=</span>param0,<span class="dt">K=</span><span class="dv">5</span>,<span class="dt">options=</span>options)</code></pre></div>
+<p>The list <code>fit</code> contains the optimized parameters, the final value of the cost function, the leave-one-out (LOO) error rate, the LOO predicted class labels and the LOO predicted mass functions. Here the LOO error rate and confusion matrix are:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(fit$err)</code></pre></div>
+<pre><code>## [1] 0.1079545</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(fit$ypred,ytr)</code></pre></div>
+<pre><code>##    ytr
+##       1   2
+##   1 108  14
+##   2   5  49</code></pre>
+<p>We can then evaluate the classifier on the test data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">val&lt;-<span class="kw">EkNNval</span>(<span class="dt">xtrain=</span>xtr,<span class="dt">ytrain=</span>ytr,<span class="dt">xtst=</span>xtst,<span class="dt">K=</span><span class="dv">5</span>,<span class="dt">ytst=</span>ytst,<span class="dt">param=</span>fit$param)
+<span class="kw">print</span>(val$err)</code></pre></div>
+<pre><code>## [1] 0.1142857</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(val$ypred,ytst)</code></pre></div>
+<pre><code>##    ytst
+##       1   2
+##   1 107  15
+##   2   5  48</code></pre>
+<p>To determine the best value of <span class="math inline">\(K\)</span>, we may compute the LOO error for different candidate value. Here, we will all values between 1 and 15</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">err&lt;-<span class="kw">rep</span>(<span class="dv">0</span>,<span class="dv">15</span>)
+i&lt;-<span class="dv">0</span>
+for(K in <span class="dv">1</span>:<span class="dv">15</span>){
+  fit&lt;-<span class="kw">EkNNfit</span>(xtr,ytr,K,<span class="dt">options=</span><span class="kw">list</span>(<span class="dt">maxiter=</span><span class="dv">100</span>,<span class="dt">eta=</span><span class="fl">0.1</span>,<span class="dt">gain_min=</span><span class="fl">1e-5</span>,<span class="dt">disp=</span><span class="ot">FALSE</span>))
+  err[K]&lt;-fit$err
+}
+<span class="kw">plot</span>(<span class="dv">1</span>:<span class="dv">15</span>,err,<span class="dt">type=</span><span class="st">&quot;b&quot;</span>,<span class="dt">xlab=</span><span class="st">'K'</span>,<span class="dt">ylab=</span><span class="st">'LOO error rate'</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" alt /><!-- --></p>
+<p>The minimum LOO error rate is obtained for <span class="math inline">\(K=8\)</span>. The test error rate and confusion matrix for that value of <span class="math inline">\(K\)</span> are obtained as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit&lt;-<span class="kw">EkNNfit</span>(xtr,ytr,<span class="dt">K=</span><span class="dv">8</span>,<span class="dt">options=</span><span class="kw">list</span>(<span class="dt">maxiter=</span><span class="dv">100</span>,<span class="dt">eta=</span><span class="fl">0.1</span>,<span class="dt">gain_min=</span><span class="fl">1e-5</span>,<span class="dt">disp=</span><span class="ot">FALSE</span>))
+val&lt;-<span class="kw">EkNNval</span>(<span class="dt">xtrain=</span>xtr,<span class="dt">ytrain=</span>ytr,<span class="dt">xtst=</span>xtst,<span class="dt">K=</span><span class="dv">8</span>,<span class="dt">ytst=</span>ytst,<span class="dt">param=</span>fit$param)
+<span class="kw">print</span>(val$err)</code></pre></div>
+<pre><code>## [1] 0.09142857</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(val$ypred,ytst)</code></pre></div>
+<pre><code>##    ytst
+##       1   2
+##   1 106  10
+##   2   6  53</code></pre>
+</div>
+<div id="evidential-neural-network-classifier" class="section level2">
+<h2>Evidential neural network classifier</h2>
+<p>In the evidential neural network classifier, the output mass functions are based on distances to protypes, which allows for faster classification. The prototypes and their class-membership degrees are leanrnt by minimizing a cost function. This function is defined as the sum of an error term and, optionally, a regularization term. As for the EK-NN classifier, the evidential neural network classifier is implemented as three functions: <code>proDSinit</code> for initialization, <code>proDSfit</code> for training and <code>proDSval</code> for evaluation.</p>
+<p>Let us demonstrate this method on the <code>glass</code> dataset. This data set contains 185 instances, which can be split into 89 training instances and 96 test instances.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(glass)
+xtr&lt;-glass$x[<span class="dv">1</span>:<span class="dv">89</span>,]
+ytr&lt;-glass$y[<span class="dv">1</span>:<span class="dv">89</span>]
+xtst&lt;-glass$x[<span class="dv">90</span>:<span class="dv">185</span>,]
+ytst&lt;-glass$y[<span class="dv">90</span>:<span class="dv">185</span>]</code></pre></div>
+<p>We then initialize a network with 7 prototypes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">param0&lt;-<span class="kw">proDSinit</span>(xtr,ytr,<span class="dt">nproto=</span><span class="dv">7</span>,<span class="dt">nprotoPerClass=</span><span class="ot">FALSE</span>,<span class="dt">crisp=</span><span class="ot">FALSE</span>)</code></pre></div>
+<p>and train this network without regularization:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">options&lt;-<span class="kw">list</span>(<span class="dt">maxiter=</span><span class="dv">500</span>,<span class="dt">eta=</span><span class="fl">0.1</span>,<span class="dt">gain_min=</span><span class="fl">1e-5</span>,<span class="dt">disp=</span><span class="dv">20</span>)
+fit&lt;-<span class="kw">proDSfit</span>(<span class="dt">x=</span>xtr,<span class="dt">y=</span>ytr,<span class="dt">param=</span>param0,<span class="dt">options=</span>options)</code></pre></div>
+<pre><code>## [1]  1.0000000  0.3582862 10.0000000
+## [1] 21.0000000  0.2933023  1.2426672
+## [1] 41.0000000  0.2263345  0.2205550
+## [1] 61.00000000  0.19483767  0.04260374
+## [1] 81.000000000  0.188954121  0.007109284
+## [1] 1.010000e+02 1.884715e-01 1.285468e-03
+## [1] 1.210000e+02 1.883760e-01 3.389789e-04
+## [1] 1.410000e+02 1.881880e-01 1.417006e-04</code></pre>
+<p>Finally, we evaluate the performance of the network on the test set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">val&lt;-<span class="kw">proDSval</span>(xtst,fit$param,ytst)
+<span class="kw">print</span>(val$err)</code></pre></div>
+<pre><code>## [1] 0.28125</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(ytst,val$ypred)</code></pre></div>
+<pre><code>##     
+## ytst  1  2  4
+##    1 32  8  0
+##    2  5 28  4
+##    3  5  3  0
+##    4  0  2  9</code></pre>
+<p>If the training is done with regularization, the hyperparameter <code>mu</code> needs to be determined by cross-validation.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-denoeux95a">
+<p>Denœux, T. 1995. “A <span class="math inline">\(k\)</span>-Nearest Neighbor Classification Rule Based on Dempster-Shafer Theory.” <em>IEEE Trans. on Systems, Man and Cybernetics</em> 25 (05): 804–13.</p>
+</div>
+<div id="ref-denoeux00a">
+<p>———. 2000. “A Neural Network Classifier Based on Dempster-Shafer Theory.” <em>IEEE Trans. on Systems, Man and Cybernetics A</em> 30 (2): 131–50.</p>
+</div>
+<div id="ref-zouhal97b">
+<p>Zouhal, L. M., and T. Denœux. 1998. “An Evidence-Theoretic <span class="math inline">\(k\)</span>-NN Rule with Parameter Optimization.” <em>IEEE Trans. on Systems, Man and Cybernetics C</em> 28 (2): 263–71.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

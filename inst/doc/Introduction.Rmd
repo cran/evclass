@@ -1,0 +1,124 @@
+---
+title: "Introduction to the evclass package"
+author: "Thierry Denoeux"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+bibliography: tdenoeux.bib
+vignette: >
+  %\VignetteIndexEntry{Introduction to the evclass package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+The package `evclass` contains methods for *evidential classification*. An evidential classifier quantifies the uncertainty about the class of a pattern by a Dempster-Shafer mass function. In evidential *distance-based* classifiers, the mass functions are computed from distances between the test pattern and either training pattern, or prototypes. The user is invited to read the papers cited in this vignette to get familiar with the main concepts underlying evidential clustering. These papers can be downloaded from the author's web site, at <https://www.hds.utc.fr/~tdenoeux>. Here, we provide a short guided tour of the main functions in the `evclass` package. The two classification methods implemented to date ate:
+
+* The evidential K-nearest neighbor classifier [@denoeux95a,@zouhal97b];
+* The evidential neural network classifier [@denoeux00a].
+
+You first need to install this package:
+
+```{r, message=FALSE}
+library(evclass)
+```
+
+The following sections contain a brief introduction on the way to use the functions in the package `evclass` for evidential classification.
+
+## Evidential K-nearest neighbor classifier
+
+The principle of the evidential K-nearest neighbor (EK-NN) classifier is explained in [@denoeux95a], and the optimization of the parameters of this model is presented in [@zouhal97b]. The reader is referred to these references. Here, we focus on the practical application of this method using the functions implemented in `evclass`.
+
+Consider, for instance, the `ionosphere` data. This dataset consists in 351 instances grouped in two classes and described by 34 numeric attributes. The first 175 instances are training data, the rest are test data. Let us first load the data, and split them into a training set and a test set.
+
+```{r}
+data(ionosphere)
+xtr<-ionosphere$x[1:176,]
+ytr<-ionosphere$y[1:176]
+xtst<-ionosphere$x[177:351,]
+ytst<-ionosphere$y[177:351]
+
+```
+
+The EK-NN classifier is implemented as three functions: `EkNNinit` for initialization, `EkNNfit` for training, and `EkNNval` for testing. Let us initialize the classifier and train it on the `ionosphere` data, with $K=5$ neighbors. (If the argument `param` is not passed to `EkNNfit`, the function `EkNNinit` is called inside `EkNNfit`; here, we make the call explicit for clarity).
+
+```{r}
+param0<- EkNNinit(xtr,ytr)
+options=list(maxiter=300,eta=0.1,gain_min=1e-5,disp=FALSE)
+fit<-EkNNfit(xtr,ytr,param=param0,K=5,options=options)
+```
+
+The list `fit` contains the optimized parameters, the final value of the cost function, the leave-one-out (LOO) error rate, the LOO predicted class labels and the LOO predicted mass functions. Here the LOO error rate and confusion matrix are:
+
+```{r}
+print(fit$err)
+table(fit$ypred,ytr)
+```
+
+We can then evaluate the classifier on the test data:
+
+```{r}
+val<-EkNNval(xtrain=xtr,ytrain=ytr,xtst=xtst,K=5,ytst=ytst,param=fit$param)
+print(val$err)
+table(val$ypred,ytst)
+```
+
+To determine the best value of $K$, we may compute the LOO error for different candidate value. Here, we will all values between 1 and 15
+
+```{r}
+err<-rep(0,15)
+i<-0
+for(K in 1:15){
+  fit<-EkNNfit(xtr,ytr,K,options=list(maxiter=100,eta=0.1,gain_min=1e-5,disp=FALSE))
+  err[K]<-fit$err
+}
+plot(1:15,err,type="b",xlab='K',ylab='LOO error rate')
+```
+
+The minimum LOO error rate is obtained for $K=8$. The test error rate and confusion matrix for that value of $K$ are obtained as follows:
+
+```{r}
+fit<-EkNNfit(xtr,ytr,K=8,options=list(maxiter=100,eta=0.1,gain_min=1e-5,disp=FALSE))
+val<-EkNNval(xtrain=xtr,ytrain=ytr,xtst=xtst,K=8,ytst=ytst,param=fit$param)
+print(val$err)
+table(val$ypred,ytst)
+```
+
+
+## Evidential neural network classifier
+
+In the evidential neural network classifier, the output mass functions are based on distances to protypes, which allows for faster classification. The prototypes and their class-membership degrees are leanrnt by minimizing a cost function. This function is defined as the sum of an error term and, optionally, a regularization term. As for the EK-NN classifier, the evidential neural network classifier is implemented as three functions: `proDSinit` for initialization, `proDSfit` for training and `proDSval` for evaluation.
+
+Let us demonstrate this method on the `glass` dataset. This data set contains 185 instances, which can be split into 89 training instances and 96 test instances.
+
+```{r}
+data(glass)
+xtr<-glass$x[1:89,]
+ytr<-glass$y[1:89]
+xtst<-glass$x[90:185,]
+ytst<-glass$y[90:185]
+```
+
+We then initialize a network with 7 prototypes:
+
+```{r}
+param0<-proDSinit(xtr,ytr,nproto=7,nprotoPerClass=FALSE,crisp=FALSE)
+```
+
+and train this network without regularization:
+
+```{r}
+options<-list(maxiter=500,eta=0.1,gain_min=1e-5,disp=20)
+fit<-proDSfit(x=xtr,y=ytr,param=param0,options=options)
+```
+
+Finally, we evaluate the performance of the network on the test set:
+
+```{r}
+val<-proDSval(xtst,fit$param,ytst)
+print(val$err)
+table(ytst,val$ypred)
+```
+
+If the training is done with regularization, the hyperparameter `mu` needs to be determined by cross-validation.
+
+## References
+
+
