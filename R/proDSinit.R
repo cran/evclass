@@ -45,6 +45,7 @@
 #' param0
 proDSinit<- function(x,y,nproto,nprotoPerClass=FALSE,crisp=FALSE){
   y<-as.numeric(y)
+  x<-as.matrix(x)
   M <- max(y)
   N <- nrow(x)
   Id <- diag(M)

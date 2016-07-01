@@ -9,9 +9,9 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-The package `evclass` contains methods for *evidential classification*. An evidential classifier quantifies the uncertainty about the class of a pattern by a Dempster-Shafer mass function. In evidential *distance-based* classifiers, the mass functions are computed from distances between the test pattern and either training pattern, or prototypes. The user is invited to read the papers cited in this vignette to get familiar with the main concepts underlying evidential clustering. These papers can be downloaded from the author's web site, at <https://www.hds.utc.fr/~tdenoeux>. Here, we provide a short guided tour of the main functions in the `evclass` package. The two classification methods implemented to date ate:
+The package `evclass` contains methods for *evidential classification*. An evidential classifier quantifies the uncertainty about the class of a pattern by a Dempster-Shafer mass function. In evidential *distance-based* classifiers, the mass functions are computed from distances between the test pattern and either training pattern, or prototypes. The user is invited to read the papers cited in this vignette to get familiar with the main concepts underlying evidential clustering. These papers can be downloaded from the author's web site, at <https://www.hds.utc.fr/~tdenoeux>. Here, we provide a short guided tour of the main functions in the `evclass` package. The two classification methods implemented to date are:
 
-* The evidential K-nearest neighbor classifier [@denoeux95a,@zouhal97b];
+* The evidential K-nearest neighbor classifier [@denoeux95a, @zouhal97b];
 * The evidential neural network classifier [@denoeux00a].
 
 You first need to install this package:
@@ -20,7 +20,7 @@ You first need to install this package:
 library(evclass)
 ```
 
-The following sections contain a brief introduction on the way to use the functions in the package `evclass` for evidential classification.
+The following sections contain a brief introduction on the way to use the main functions in the package `evclass` for evidential classification.
 
 ## Evidential K-nearest neighbor classifier
 
@@ -118,6 +118,77 @@ table(ytst,val$ypred)
 ```
 
 If the training is done with regularization, the hyperparameter `mu` needs to be determined by cross-validation.
+
+## Decision
+
+In the belief function framework, there are several definitions of expectation. Each of these definitions results in a different decision rule that can be used for classification. The reader is referred to [@denoeux96b] for a detailed description of theses rules and there application to classification. Here, we will illustrate the use of the function `decision` for generating decisions.
+
+We consider the Iris dataset from the package `datasets`. To plot the decisions regions, we will only use two input attributes: 'Petal.Length' and  'Petal.Width'. This code plots of the data and trains the evidential neural network classifiers with six prototypes:
+
+```{r, fig.width=6, fig.height=6}
+data("iris")
+x<- iris[,3:4]
+y<-as.numeric(iris[,5])
+c<-max(y)
+plot(x[,1],x[,2],pch=y,xlab="Petal Length",ylab="Petal Width")
+
+param0<-proDSinit(x,y,6)
+fit<-proDSfit(x,y,param0)
+```
+
+Let us assume that we have the following loss matrix:
+
+```{r}
+L=cbind(1-diag(c),rep(0.3,c))
+print(L)
+```
+This matrix has four columns, one for each possible act (decision). The first three decisions correspond to the assignment to each the three classes. The losses are 0 for a correct classification, and 1 for a misclassification. The fourth decision is rejection. For this act, the loss is 0.3, whatever the true class. The following code draws the decision regions for this loss matrix, and three decision rules: the minimization of the lower, upper and pignistic expectations (see [@denoeux96b] for details about these rules).
+
+```{r, fig.width=6, fig.height=6}
+xx<-seq(-1,9,0.01)
+yy<-seq(-2,4.5,0.01)
+nx<-length(xx)
+ny<-length(yy)
+Dlower<-matrix(0,nrow=nx,ncol=ny)
+Dupper<-Dlower
+Dpig<-Dlower
+for(i in 1:nx){
+  X<-matrix(c(rep(xx[i],ny),yy),ny,2)
+  val<-proDSval(X,fit$param,rep(0,ny))
+  Dupper[i,]<-decision(val$m,L=L,rule='upper')
+  Dlower[i,]<-decision(val$m,L=L,rule='lower')
+  Dpig[i,]<-decision(val$m,L=L,rule='pignistic')
+}
+
+contour(xx,yy,Dlower,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE)
+for(k in 1:c) points(x[y==k,1],x[y==k,2],pch=k)
+contour(xx,yy,Dupper,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE,add=TRUE,lty=2)
+contour(xx,yy,Dpig,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE,add=TRUE,lty=3)
+```
+
+As suggested in [@denoeux96b], we can also consider the case where there is an unknown class, not represented in the learning set. We can then construct a loss matrix with four rows (the last row corresponds to the unknown class) and five columns (the last column corresponds to the assignment to the unknown class). Assume that the losses are defined as follows:
+
+```{r}
+L<-cbind(1-diag(c),rep(0.2,c),rep(0.22,c))
+L<-rbind(L,c(1,1,1,0.2,0))
+print(L)
+```
+
+We can now plot the decision regions for the pignistic decision rule:
+
+```{r, fig.width=6, fig.height=6}
+for(i in 1:nx){
+  X<-matrix(c(rep(xx[i],ny),yy),ny,2)
+  val<-proDSval(X,fit$param,rep(0,ny))
+  Dlower[i,]<-decision(val$m,L=L,rule='lower')
+  Dpig[i,]<-decision(val$m,L=L,rule='pignistic')
+}
+
+contour(xx,yy,Dpig,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE)
+for(k in 1:c) points(x[y==k,1],x[y==k,2],pch=k)
+```
+
+The outer region corresponds to the assignment to the unknown class: this hypothesis becomes more plausible when the test vector is far from all the prototypes representing the training data.
 
 ## References
 

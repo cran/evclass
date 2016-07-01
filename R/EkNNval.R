@@ -54,7 +54,9 @@
 #' fit<-EkNNfit(xtrain,ytrain,K)
 #' test<-EkNNval(xtrain,ytrain,xtst,K,ytst,fit$param)
 EkNNval <- function(xtrain,ytrain,xtst,K,ytst=NULL,param=NULL){
-
+  
+  xtst<-as.matrix(xtst)
+  xtrain<-as.matrix(xtrain)
   ytrain<-as.numeric(ytrain)
   if(!is.null(ytst)) ytst<-as.numeric(ytst)
 

@@ -3,6 +3,7 @@
 export(EkNNfit)
 export(EkNNinit)
 export(EkNNval)
+export(decision)
 export(proDSfit)
 export(proDSinit)
 export(proDSval)

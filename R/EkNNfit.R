@@ -55,7 +55,7 @@
 #' fit<-EkNNfit(x,y,K=5)
 EkNNfit<-function(x,y,K,param=NULL,alpha=0.95,lambda=1/max(as.numeric(y)),optimize=TRUE,
                   options=list(maxiter=300,eta=0.1,gain_min=1e-6,disp=TRUE)){
-  y<-as.integer(y)
+  y<-as.numeric(y)
   x<-as.matrix(x)
   if(is.null(param)) param<-EkNNinit(x,y,alpha)
   knn<-get.knn(x,k=K)

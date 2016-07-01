@@ -44,6 +44,7 @@
 #' param
 EkNNinit<-function(x,y,alpha=0.95){
   y<-as.numeric(y)
+  x<-as.matrix(x)
   M<-max(y)
   gamm<-rep(0,M)
   for(k in 1:M){

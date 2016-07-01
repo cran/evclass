@@ -57,3 +57,54 @@ val<-proDSval(xtst,fit$param,ytst)
 print(val$err)
 table(ytst,val$ypred)
 
+## ---- fig.width=6, fig.height=6------------------------------------------
+data("iris")
+x<- iris[,3:4]
+y<-as.numeric(iris[,5])
+c<-max(y)
+plot(x[,1],x[,2],pch=y,xlab="Petal Length",ylab="Petal Width")
+
+param0<-proDSinit(x,y,6)
+fit<-proDSfit(x,y,param0)
+
+## ------------------------------------------------------------------------
+L=cbind(1-diag(c),rep(0.3,c))
+print(L)
+
+## ---- fig.width=6, fig.height=6------------------------------------------
+xx<-seq(-1,9,0.01)
+yy<-seq(-2,4.5,0.01)
+nx<-length(xx)
+ny<-length(yy)
+Dlower<-matrix(0,nrow=nx,ncol=ny)
+Dupper<-Dlower
+Dpig<-Dlower
+for(i in 1:nx){
+  X<-matrix(c(rep(xx[i],ny),yy),ny,2)
+  val<-proDSval(X,fit$param,rep(0,ny))
+  Dupper[i,]<-decision(val$m,L=L,rule='upper')
+  Dlower[i,]<-decision(val$m,L=L,rule='lower')
+  Dpig[i,]<-decision(val$m,L=L,rule='pignistic')
+}
+
+contour(xx,yy,Dlower,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE)
+for(k in 1:c) points(x[y==k,1],x[y==k,2],pch=k)
+contour(xx,yy,Dupper,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE,add=TRUE,lty=2)
+contour(xx,yy,Dpig,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE,add=TRUE,lty=3)
+
+## ------------------------------------------------------------------------
+L<-cbind(1-diag(c),rep(0.2,c),rep(0.22,c))
+L<-rbind(L,c(1,1,1,0.2,0))
+print(L)
+
+## ---- fig.width=6, fig.height=6------------------------------------------
+for(i in 1:nx){
+  X<-matrix(c(rep(xx[i],ny),yy),ny,2)
+  val<-proDSval(X,fit$param,rep(0,ny))
+  Dlower[i,]<-decision(val$m,L=L,rule='lower')
+  Dpig[i,]<-decision(val$m,L=L,rule='pignistic')
+}
+
+contour(xx,yy,Dpig,xlab="Petal.Length",ylab="Petal.Width",drawlabels=FALSE)
+for(k in 1:c) points(x[y==k,1],x[y==k,2],pch=k)
+

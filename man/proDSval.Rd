@@ -11,7 +11,7 @@ proDSval(x, param, y = NULL)
 
 \item{param}{Neural network parameters, as provided by \code{\link{proDSfit}}.}
 
-\item{y}{Optimnal vector of class labels for the test data. May be a factor, or a vector of
+\item{y}{Optional vector of class labels for the test data. May be a factor, or a vector of
 integers.}
 }
 \value{

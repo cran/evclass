@@ -54,8 +54,9 @@
 #' fit<-proDSfit(xapp,yapp,param0)
 proDSfit <- function(x,y,param,lambda=1/max(as.numeric(y)),mu=0,optimProto=TRUE,
                      options=list(maxiter=500,eta=0.1,gain_min=1e-4,disp=10)){
-
-  M<-max(as.numeric(y))
+  x<-as.matrix(x)
+  y<-as.numeric(y)
+  M<-max(y)
   n<-nrow(param$W)
   p<-ncol(param$W)
   Id <- diag(M)
