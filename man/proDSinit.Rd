@@ -11,7 +11,7 @@ proDSinit(x, y, nproto, nprotoPerClass = FALSE, crisp = FALSE)
 attributes.}
 
 \item{y}{Vector of class lables (of length n). May be a factor, or a vector of
-integers.}
+integers from 1 to M (number of classes).}
 
 \item{nproto}{Number of prototypes.}
 
@@ -47,9 +47,6 @@ yapp<-glass$y[1:89]
 param0<-proDSinit(xapp,yapp,nproto=7)
 param0
 }
-\author{
-Thierry Denoeux.
-}
 \references{
 T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
@@ -59,4 +56,6 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \seealso{
 \code{\link{proDSfit}}, \code{\link{proDSval}}
 }
-
+\author{
+Thierry Denoeux.
+}

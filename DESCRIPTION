@@ -1,8 +1,8 @@
 Package: evclass
 Type: Package
 Title: Evidential Distance-Based Classification
-Version: 1.1.0
-Date: 2016-07-01
+Version: 1.1.1
+Date: 2017-03-19
 Author: Thierry Denoeux
 Maintainer: Thierry Denoeux <tdenoeux@utc.fr>
 Description: Different evidential distance-based classifiers, which provide
@@ -12,10 +12,10 @@ License: GPL-3
 Depends: R (>= 3.1.0)
 Imports: FNN
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 Suggests: knitr,rmarkdown,datasets
 NeedsCompilation: no
-Packaged: 2016-07-01 08:58:55 UTC; Thierry
+Packaged: 2017-03-19 10:12:39 UTC; Thierry
 Repository: CRAN
-Date/Publication: 2016-07-01 13:54:48
+Date/Publication: 2017-03-20 05:22:18 UTC

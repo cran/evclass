@@ -7,7 +7,7 @@
 #' @param x Input matrix of size n x d, where n is the number of objects and d the number of
 #' attributes.
 #' @param y Vector of class labels (of length n). May be a factor, or a vector of
-#' integers.
+#' integers from 1 to M (number of classes).
 #' @param K Number of neighbors.
 #' @param param Initial parameters (default: NULL).
 #' @param alpha Parameter \eqn{\alpha} (default: 0.95)
@@ -26,7 +26,7 @@
 #'   \item{param}{The optimized parameters.}
 #'   \item{cost}{Final value of the cost function.}
 #'   \item{err}{Leave-one-out error rate.}
-#'   \item{ypred}{Leave-one-out predicted class labels.}
+#'   \item{ypred}{Leave-one-out predicted class labels (coded as integers from 1 to M).}
 #'   \item{m}{Leave-one-out predicted mass functions. The first M columns correspond
 #'   to the mass assigned to each class. The last column corresponds to the mass
 #'   assigned to the whole set of classes.}
@@ -55,7 +55,7 @@
 #' fit<-EkNNfit(x,y,K=5)
 EkNNfit<-function(x,y,K,param=NULL,alpha=0.95,lambda=1/max(as.numeric(y)),optimize=TRUE,
                   options=list(maxiter=300,eta=0.1,gain_min=1e-6,disp=TRUE)){
-  y<-as.numeric(y)
+  y<-as.integer(as.factor(y))
   x<-as.matrix(x)
   if(is.null(param)) param<-EkNNinit(x,y,alpha)
   knn<-get.knn(x,k=K)

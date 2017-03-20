@@ -13,7 +13,7 @@ EkNNfit(x, y, K, param = NULL, alpha = 0.95,
 attributes.}
 
 \item{y}{Vector of class labels (of length n). May be a factor, or a vector of
-integers.}
+integers from 1 to M (number of classes).}
 
 \item{K}{Number of neighbors.}
 
@@ -39,7 +39,7 @@ A list with five elements:
   \item{param}{The optimized parameters.}
   \item{cost}{Final value of the cost function.}
   \item{err}{Leave-one-out error rate.}
-  \item{ypred}{Leave-one-out predicted class labels.}
+  \item{ypred}{Leave-one-out predicted class labels (coded as integers from 1 to M).}
   \item{m}{Leave-one-out predicted mass functions. The first M columns correspond
   to the mass assigned to each class. The last column corresponds to the mass
   assigned to the whole set of classes.}
@@ -58,9 +58,6 @@ x<-iris[,1:4]
 y<-iris[,5]
 fit<-EkNNfit(x,y,K=5)
 }
-\author{
-Thierry Denoeux.
-}
 \references{
 T. Denoeux. A k-nearest neighbor classification rule based on Dempster-Shafer
 theory. IEEE Transactions on Systems, Man and Cybernetics, 25(05):804--813, 1995.
@@ -74,4 +71,6 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \seealso{
 \code{\link{EkNNinit}}, \code{\link{EkNNval}}
 }
-
+\author{
+Thierry Denoeux.
+}

@@ -11,7 +11,7 @@ EkNNval(xtrain, ytrain, xtst, K, ytst = NULL, param = NULL)
 training data.}
 
 \item{ytrain}{Vector of class labels for the training data (of length ntrain). May
-be a factor, or a vector of integers.}
+be a factor, or a vector of integers from 1 to M (number of classes).}
 
 \item{xtst}{Matrix of size ntst x d, containing the values of the d attributes for the
 test data.}
@@ -19,7 +19,7 @@ test data.}
 \item{K}{Number of neighbors.}
 
 \item{ytst}{Vector of class labels for the test data (optional). May
-be a factor, or a vector of integers.}
+be a factor, or a vector of integers from 1 to M (number of classes).}
 
 \item{param}{Parameters, as returned by \code{\link{EkNNfit}}.}
 }
@@ -29,7 +29,7 @@ A list with three elements:
   \item{m}{Predicted mass functions for the test data. The first M columns correspond
   to the mass assigned to each class. The last column corresponds to the mass
   assigned to the whole set of classes.}
-  \item{ypred}{Predicted class labels for the test data.}
+  \item{ypred}{Predicted class labels for the test data (coded as integers from 1 to M).}
   \item{err}{Test error rate.}
  }
 }
@@ -52,9 +52,6 @@ K<-5
 fit<-EkNNfit(xtrain,ytrain,K)
 test<-EkNNval(xtrain,ytrain,xtst,K,ytst,fit$param)
 }
-\author{
-Thierry Denoeux.
-}
 \references{
 T. Denoeux. A k-nearest neighbor classification rule based on Dempster-Shafer
 theory. IEEE Transactions on Systems, Man and Cybernetics, 25(05):804--813, 1995.
@@ -68,4 +65,6 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \seealso{
 \code{\link{EkNNinit}}, \code{\link{EkNNfit}}
 }
-
+\author{
+Thierry Denoeux.
+}

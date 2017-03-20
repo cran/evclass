@@ -11,7 +11,7 @@
 #' @param x Input matrix of size n x d, where n is the number of objects and d the number of
 #' attributes.
 #' @param y Vector of class lables (of length n). May be a factor, or a vector of
-#' integers.
+#' integers from 1 to M (number of classes).
 #' @param alpha Parameter \eqn{\alpha}.
 #'
 #' @return A list with two elements:
@@ -43,7 +43,7 @@
 #' param<-EkNNinit(x,y)
 #' param
 EkNNinit<-function(x,y,alpha=0.95){
-  y<-as.numeric(y)
+  y<-as.integer(as.factor(y))
   x<-as.matrix(x)
   M<-max(y)
   gamm<-rep(0,M)

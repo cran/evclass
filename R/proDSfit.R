@@ -10,7 +10,7 @@
 #' @param x Input matrix of size n x d, where n is the number of objects and d the number of
 #' attributes.
 #' @param y Vector of class lables (of length n). May be a factor, or a vector of
-#' integers.
+#' integers from 1 to M (number of classes).
 #' @param param Initial parameters (see \code{link{proDSinit}}).
 #' @param lambda Parameter of the cost function. If \code{lambda=1}, the
 #' cost function measures the error between the plausibilities and the 0-1 target values.
@@ -55,7 +55,7 @@
 proDSfit <- function(x,y,param,lambda=1/max(as.numeric(y)),mu=0,optimProto=TRUE,
                      options=list(maxiter=500,eta=0.1,gain_min=1e-4,disp=10)){
   x<-as.matrix(x)
-  y<-as.numeric(y)
+  y<-as.integer(as.factor(y))
   M<-max(y)
   n<-nrow(param$W)
   p<-ncol(param$W)

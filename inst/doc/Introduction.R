@@ -81,7 +81,7 @@ Dupper<-Dlower
 Dpig<-Dlower
 for(i in 1:nx){
   X<-matrix(c(rep(xx[i],ny),yy),ny,2)
-  val<-proDSval(X,fit$param,rep(0,ny))
+  val<-proDSval(X,fit$param)
   Dupper[i,]<-decision(val$m,L=L,rule='upper')
   Dlower[i,]<-decision(val$m,L=L,rule='lower')
   Dpig[i,]<-decision(val$m,L=L,rule='pignistic')

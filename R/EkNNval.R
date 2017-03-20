@@ -9,12 +9,12 @@
 #' @param xtrain Matrix of size ntrain x d, containing the values of the d attributes for the
 #' training data.
 #' @param ytrain Vector of class labels for the training data (of length ntrain). May
-#' be a factor, or a vector of integers.
+#' be a factor, or a vector of integers from 1 to M (number of classes).
 #' @param xtst Matrix of size ntst x d, containing the values of the d attributes for the
 #' test data.
 #' @param K Number of neighbors.
 #' @param ytst Vector of class labels for the test data (optional). May
-#' be a factor, or a vector of integers.
+#' be a factor, or a vector of integers from 1 to M (number of classes).
 #' @param param Parameters, as returned by \code{\link{EkNNfit}}.
 #'
 #' @return A list with three elements:
@@ -22,7 +22,7 @@
 #'   \item{m}{Predicted mass functions for the test data. The first M columns correspond
 #'   to the mass assigned to each class. The last column corresponds to the mass
 #'   assigned to the whole set of classes.}
-#'   \item{ypred}{Predicted class labels for the test data.}
+#'   \item{ypred}{Predicted class labels for the test data (coded as integers from 1 to M).}
 #'   \item{err}{Test error rate.}
 #'  }
 #'
@@ -54,11 +54,11 @@
 #' fit<-EkNNfit(xtrain,ytrain,K)
 #' test<-EkNNval(xtrain,ytrain,xtst,K,ytst,fit$param)
 EkNNval <- function(xtrain,ytrain,xtst,K,ytst=NULL,param=NULL){
-  
+
   xtst<-as.matrix(xtst)
   xtrain<-as.matrix(xtrain)
-  ytrain<-as.numeric(ytrain)
-  if(!is.null(ytst)) ytst<-as.numeric(ytst)
+  ytrain<-y<-as.integer(as.factor(ytrain))
+  if(!is.null(ytst)) ytst<-y<-as.integer(as.factor(ytst))
 
   if(is.null(param)) param<-EkNNinit(xtrain,ytrain)
 

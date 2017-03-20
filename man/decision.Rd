@@ -49,9 +49,6 @@ d<-decision(m,L,'lower') ## instance 2 is rejected, instance 3 is
 # assigned to the unknown class
 
 }
-\author{
-Thierry Denoeux.
-}
 \references{
 T. Denoeux. Analysis of evidence-theoretic decision rules for pattern
 classification. Pattern Recognition, 30(7):1095--1107, 1997.
@@ -61,4 +58,6 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \seealso{
 \code{\link{EkNNval}}, \code{\link{proDSval}}
 }
-
+\author{
+Thierry Denoeux.
+}

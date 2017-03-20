@@ -7,7 +7,7 @@
 #' @param x Matrix of size n x d, containing the values of the d attributes for the test data.
 #' @param param Neural network parameters, as provided by \code{\link{proDSfit}}.
 #' @param y Optional vector of class labels for the test data. May be a factor, or a vector of
-#' integers.
+#' integers from 1 to M (number of classes).
 #'
 #' @return A list with three elements:
 #'   \describe{
@@ -48,6 +48,7 @@ proDSval<-function(x,param,y=NULL){
   n<-nrow(param$W)
   p<-ncol(param$W)
   x<-as.matrix(x)
+  y<-as.integer(as.factor(y))
   N <- nrow(x)
   M <- ncol(param$beta)
   x<-t(x)
@@ -71,7 +72,7 @@ proDSval<-function(x,param,y=NULL){
   ypred<-max.col(mk[,1:M])
 
   if(!is.null(y)){
-    err<-length(which(as.numeric(y)!=ypred))/N
+    err<-length(which(y!=ypred))/N
   } else err<-NULL
 
   return(list(m=mk,ypred=ypred,err=err))

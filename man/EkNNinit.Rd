@@ -11,7 +11,7 @@ EkNNinit(x, y, alpha = 0.95)
 attributes.}
 
 \item{y}{Vector of class lables (of length n). May be a factor, or a vector of
-integers.}
+integers from 1 to M (number of classes).}
 
 \item{alpha}{Parameter \eqn{\alpha}.}
 }
@@ -39,9 +39,6 @@ y<-iris[,5]
 param<-EkNNinit(x,y)
 param
 }
-\author{
-Thierry Denoeux.
-}
 \references{
 T. Denoeux. A k-nearest neighbor classification rule based on Dempster-Shafer
 theory. IEEE Transactions on Systems, Man and Cybernetics, 25(05):804--813, 1995.
@@ -55,4 +52,6 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \seealso{
 \code{\link{EkNNfit}}, \code{\link{EkNNval}}
 }
-
+\author{
+Thierry Denoeux.
+}

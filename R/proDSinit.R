@@ -10,7 +10,7 @@
 #' @param x Input matrix of size n x d, where n is the number of objects and d the number of
 #' attributes.
 #' @param y Vector of class lables (of length n). May be a factor, or a vector of
-#' integers.
+#' integers from 1 to M (number of classes).
 #' @param nproto Number of prototypes.
 #' @param nprotoPerClass Boolean. If TRUE, there are \code{nproto} prototypes per class. If
 #' FALSE (default), the total number of prototypes is equal to \code{nproto}.
@@ -44,7 +44,7 @@
 #' param0<-proDSinit(xapp,yapp,nproto=7)
 #' param0
 proDSinit<- function(x,y,nproto,nprotoPerClass=FALSE,crisp=FALSE){
-  y<-as.numeric(y)
+  y<-as.integer(as.factor(y))
   x<-as.matrix(x)
   M <- max(y)
   N <- nrow(x)

@@ -13,7 +13,7 @@ proDSfit(x, y, param, lambda = 1/max(as.numeric(y)), mu = 0,
 attributes.}
 
 \item{y}{Vector of class lables (of length n). May be a factor, or a vector of
-integers.}
+integers from 1 to M (number of classes).}
 
 \item{param}{Initial parameters (see \code{link{proDSinit}}).}
 
@@ -60,9 +60,6 @@ param0<-proDSinit(xapp,yapp,nproto=7)
 ## Training
 fit<-proDSfit(xapp,yapp,param0)
 }
-\author{
-Thierry Denoeux.
-}
 \references{
 T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
@@ -72,4 +69,6 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \seealso{
 \code{\link{proDSinit}}, \code{\link{proDSval}}
 }
-
+\author{
+Thierry Denoeux.
+}

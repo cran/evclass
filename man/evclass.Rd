@@ -37,4 +37,3 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \code{\link{EkNNinit}}, \code{\link{EkNNfit}},
 \code{\link{EkNNval}}, \code{\link{proDSinit}}, \code{\link{proDSfit}}, \code{\link{proDSval}}.
 }
-

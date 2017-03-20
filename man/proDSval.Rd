@@ -12,7 +12,7 @@ proDSval(x, param, y = NULL)
 \item{param}{Neural network parameters, as provided by \code{\link{proDSfit}}.}
 
 \item{y}{Optional vector of class labels for the test data. May be a factor, or a vector of
-integers.}
+integers from 1 to M (number of classes).}
 }
 \value{
 A list with three elements:
@@ -46,9 +46,6 @@ val<-proDSval(xtst,fit$param,ytst)
 ## Confusion matrix
 table(ytst,val$ypred)
 }
-\author{
-Thierry Denoeux.
-}
 \references{
 T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
@@ -58,4 +55,6 @@ Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 \seealso{
 \code{\link{proDSinit}}, \code{\link{proDSfit}}
 }
-
+\author{
+Thierry Denoeux.
+}
