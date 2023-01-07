@@ -4,8 +4,12 @@
 \alias{decision}
 \title{Decision rules for evidential classifiers}
 \usage{
-decision(m, L = 1 - diag(ncol(m) - 1), rule = c("upper", "lower",
-  "pignistic", "hurwicz"), rho = 0.5)
+decision(
+  m,
+  L = 1 - diag(ncol(m) - 1),
+  rule = c("upper", "lower", "pignistic", "hurwicz"),
+  rho = 0.5
+)
 }
 \arguments{
 \item{m}{Matrix of masses for n test cases. Each row is a mass function. The first M columns
@@ -52,8 +56,6 @@ d<-decision(m,L,'lower') ## instance 2 is rejected, instance 3 is
 \references{
 T. Denoeux. Analysis of evidence-theoretic decision rules for pattern
 classification. Pattern Recognition, 30(7):1095--1107, 1997.
-
-Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 }
 \seealso{
 \code{\link{EkNNval}}, \code{\link{proDSval}}

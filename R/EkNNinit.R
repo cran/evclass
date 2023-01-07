@@ -27,8 +27,6 @@
 #' optimization. IEEE Transactions on Systems, Man and Cybernetics Part C,
 #' 28(2):263--271,1998.
 #'
-#'Available from \url{https://www.hds.utc.fr/~tdenoeux}.
-#'
 #'@author Thierry Denoeux.
 #'
 #' @export

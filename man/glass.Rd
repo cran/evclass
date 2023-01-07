@@ -4,11 +4,13 @@
 \name{glass}
 \alias{glass}
 \title{Glass dataset}
-\format{A list with two elements:
+\format{
+A list with two elements:
 \describe{
 \item{x}{The 185 x 9 object-attribute matrix.}
 \item{y}{A 185-vector containing the class labels.}
-}}
+}
+}
 \usage{
 data(glass)
 }

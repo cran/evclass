@@ -1,0 +1,7 @@
+Package: evclass
+Title: Evidential Distance-Based Classification
+
+Changes in version 2.0.0 
+
+* Implementation of radial basis function neural network classifiers.
+* Functions to express the outputs of trained logistic regression or feed-forward neural network classifiers as Dempster-Shafer mass functions. (These methods are based on an interpretation of the operations performed in neural networks as the combination of weights of evidence by Dempster's rule, see: "T. Denoeux, Logistic Regression, Neural Networks and Dempster-Shafer Theory: a New Perspective. Knowledge-Based Systems 176:54-67, 2019").

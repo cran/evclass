@@ -4,9 +4,16 @@
 \alias{EkNNfit}
 \title{Training of the EkNN classifier}
 \usage{
-EkNNfit(x, y, K, param = NULL, alpha = 0.95,
-  lambda = 1/max(as.numeric(y)), optimize = TRUE, options = list(maxiter =
-  300, eta = 0.1, gain_min = 1e-06, disp = TRUE))
+EkNNfit(
+  x,
+  y,
+  K,
+  param = NULL,
+  alpha = 0.95,
+  lambda = 1/max(as.numeric(y)),
+  optimize = TRUE,
+  options = list(maxiter = 300, eta = 0.1, gain_min = 1e-06, disp = TRUE)
+)
 }
 \arguments{
 \item{x}{Input matrix of size n x d, where n is the number of objects and d the number of
@@ -65,8 +72,6 @@ theory. IEEE Transactions on Systems, Man and Cybernetics, 25(05):804--813, 1995
 L. M. Zouhal and T. Denoeux. An evidence-theoretic k-NN rule with parameter
 optimization. IEEE Transactions on Systems, Man and Cybernetics Part C,
 28(2):263--271,1998.
-
-Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 }
 \seealso{
 \code{\link{EkNNinit}}, \code{\link{EkNNval}}

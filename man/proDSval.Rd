@@ -49,8 +49,6 @@ table(ytst,val$ypred)
 \references{
 T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
-
-Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 }
 \seealso{
 \code{\link{proDSinit}}, \code{\link{proDSfit}}

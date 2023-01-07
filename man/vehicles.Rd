@@ -4,11 +4,13 @@
 \name{vehicles}
 \alias{vehicles}
 \title{Vehicles dataset}
-\format{A list with two elements:
+\format{
+A list with two elements:
 \describe{
 \item{x}{The 846 x 18 object-attribute matrix.}
 \item{y}{A 846-vector containing the class labels.}
-}}
+}
+}
 \usage{
 data(vehicles)
 }

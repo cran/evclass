@@ -22,8 +22,6 @@
 #'T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 #'IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
 #'
-#'Available from \url{https://www.hds.utc.fr/~tdenoeux}.
-#'
 #'@author Thierry Denoeux.
 #'
 #' @export
@@ -55,7 +53,7 @@ proDSval<-function(x,param,y=NULL){
 
   BETA2<-param$beta^2
   beta2 <- rowSums(BETA2)
-  U <- BETA2 / matrix(beta2,n,M,byrow=TRUE)
+  U <- BETA2 / matrix(beta2,n,M)
   alphap<-0.99 / (1 + exp(-param$alpha))
 
   mk <- rbind(matrix(0,M,N),rep(1,N))

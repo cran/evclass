@@ -10,7 +10,7 @@ proDSinit(x, y, nproto, nprotoPerClass = FALSE, crisp = FALSE)
 \item{x}{Input matrix of size n x d, where n is the number of objects and d the number of
 attributes.}
 
-\item{y}{Vector of class lables (of length n). May be a factor, or a vector of
+\item{y}{Vector of class labels (of length n). May be a factor, or a vector of
 integers from 1 to M (number of classes).}
 
 \item{nproto}{Number of prototypes.}
@@ -18,15 +18,15 @@ integers from 1 to M (number of classes).}
 \item{nprotoPerClass}{Boolean. If TRUE, there are \code{nproto} prototypes per class. If
 FALSE (default), the total number of prototypes is equal to \code{nproto}.}
 
-\item{crisp}{Boolean. If TRUE, the prototypes have full membership to only one class. (Available only is
+\item{crisp}{Boolean. If TRUE, the prototypes have full membership to only one class. (Available only if
 nprotoPerClass=TRUE).}
 }
 \value{
-A list with four elements containg the initialized network parameters
+A list with four elements containing the initialized network parameters
   \describe{
   \item{alpha}{Vector of length r, where r is the number of prototypes.}
   \item{gamma}{Vector of length r}
-  \item{beta}{Matrix of size (r,M), where M is the number fo classes.}
+  \item{beta}{Matrix of size (r,M), where M is the number of classes.}
   \item{W}{Matrix of size (r,d), containing the prototype coordinates.}
  }
 }
@@ -50,8 +50,6 @@ param0
 \references{
 T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
-
-Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 }
 \seealso{
 \code{\link{proDSfit}}, \code{\link{proDSval}}

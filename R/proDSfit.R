@@ -2,10 +2,8 @@
 #'
 #'\code{proDSfit} performs parameter optimization for the evidential neural network classifier.
 #'
-#'The prototypes are initialized by the k-means algorithms. The initial membership values \eqn{u_{ik}} of
-#'each prototype \eqn{p_i} to class \eqn{\omega_k} are normally defined as the proportion of training samples
-#'from class \eqn{\omega_k} in the neighborhood of prototype \eqn{p_i}. If arguments \code{crisp} and
-#'\code{nprotoPerClass} are set to TRUE, the prototypes are assigned to one and only one class.
+#'If \code{optimProto=TRUE} (default), the prototypes are optimized. Otherwise, they are fixed to
+#'their initial value.
 #'
 #' @param x Input matrix of size n x d, where n is the number of objects and d the number of
 #' attributes.
@@ -33,8 +31,6 @@
 #'
 #'@references T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 #'IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
-#'
-#'Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 #'
 #'@author Thierry Denoeux.
 #'

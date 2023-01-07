@@ -28,8 +28,6 @@
 #'T. Denoeux. Analysis of evidence-theoretic decision rules for pattern
 #'classification. Pattern Recognition, 30(7):1095--1107, 1997.
 #'
-#'Available from \url{https://www.hds.utc.fr/~tdenoeux}.
-#'
 #'@author Thierry Denoeux.
 #'
 #' @export

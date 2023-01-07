@@ -12,7 +12,7 @@ foncgradr2n<- function(w,X,t,lambda,mu,optimProto){
   alpha <- w[(n*(p+1+M)+1):l]
   BETA2 <- BETA^2
   beta2 <- rowSums(BETA2)
-  U <- BETA2 / matrix(beta2,n,M,byrow=TRUE)
+  U <- BETA2 / matrix(beta2,n,M)
 
   d<-matrix(0,n,N)
   s<-d
@@ -71,7 +71,7 @@ foncgradr2n<- function(w,X,t,lambda,mu,optimProto){
 DW <- as.numeric(optimProto)*DW/N
 
 T <- matrix(beta2,n,M)
-Dbeta <- 2*BETA / T^2 * (dU *(T - BETA2) - matrix(rowSums(dU*BETA2),n,M) + dU * BETA2)
+Dbeta <- 2*BETA / T^2 * (dU *T  - matrix(rowSums(dU*BETA2),n,M))
 
 Dgamma <- - 2 * rowMeans(Ds * d * s) * Gamma
 Dalpha <- (rowMeans(Ds * expo)+ mu) * 0.99 * (1-alphap) * alphap

@@ -4,9 +4,15 @@
 \alias{proDSfit}
 \title{Training of the evidential neural network classifier}
 \usage{
-proDSfit(x, y, param, lambda = 1/max(as.numeric(y)), mu = 0,
-  optimProto = TRUE, options = list(maxiter = 500, eta = 0.1, gain_min =
-  1e-04, disp = 10))
+proDSfit(
+  x,
+  y,
+  param,
+  lambda = 1/max(as.numeric(y)),
+  mu = 0,
+  optimProto = TRUE,
+  options = list(maxiter = 500, eta = 0.1, gain_min = 1e-04, disp = 10)
+)
 }
 \arguments{
 \item{x}{Input matrix of size n x d, where n is the number of objects and d the number of
@@ -43,10 +49,8 @@ A list with three elements:
 \code{proDSfit} performs parameter optimization for the evidential neural network classifier.
 }
 \details{
-The prototypes are initialized by the k-means algorithms. The initial membership values \eqn{u_{ik}} of
-each prototype \eqn{p_i} to class \eqn{\omega_k} are normally defined as the proportion of training samples
-from class \eqn{\omega_k} in the neighborhood of prototype \eqn{p_i}. If arguments \code{crisp} and
-\code{nprotoPerClass} are set to TRUE, the prototypes are assigned to one and only one class.
+If \code{optimProto=TRUE} (default), the prototypes are optimized. Otherwise, they are fixed to
+their initial value.
 }
 \examples{
 ## Glass dataset
@@ -63,8 +67,6 @@ fit<-proDSfit(xapp,yapp,param0)
 \references{
 T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
-
-Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 }
 \seealso{
 \code{\link{proDSinit}}, \code{\link{proDSval}}

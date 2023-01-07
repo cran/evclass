@@ -9,10 +9,13 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-The package `evclass` contains methods for *evidential classification*. An evidential classifier quantifies the uncertainty about the class of a pattern by a Dempster-Shafer mass function. In evidential *distance-based* classifiers, the mass functions are computed from distances between the test pattern and either training pattern, or prototypes. The user is invited to read the papers cited in this vignette to get familiar with the main concepts underlying evidential clustering. These papers can be downloaded from the author's web site, at <https://www.hds.utc.fr/~tdenoeux>. Here, we provide a short guided tour of the main functions in the `evclass` package. The two classification methods implemented to date are:
+The package `evclass` contains methods for *evidential classification*. An evidential classifier quantifies the uncertainty about the class of a pattern by a Dempster-Shafer mass function. In evidential *distance-based* classifiers, the mass functions are computed from distances between the test pattern and either training pattern, or prototypes. Classical classifiers such as logistic regression, radial basis function (RBF) neural networks and multilayer perceptrons with a softmax output layer can also be seen as evidential classifiers. The user is invited to read the papers cited in this vignette to get familiar with the main concepts underlying evidential classification. These papers can be downloaded from the author's web site, at <https://www.hds.utc.fr/~tdenoeux/>. Here, we provide a short guided tour of the main functions in the `evclass` package. The classification methods implemented to date are:
 
-* The evidential K-nearest neighbor classifier [@denoeux95a, @zouhal97b];
-* The evidential neural network classifier [@denoeux00a].
+* The evidential K-nearest neighbor classifier [@denoeux95a] [@zouhal97b];
+* The evidential neural network classifier [@denoeux00a];
+* RBF neural network with weight-of-evidence interpretation [@denoeux19d] [@huang22].
+
+Also included in this package are functions to express the outputs of already trained logistic regression of multilayer perceptron classifiers in the belief function framework, using the approach described in [@denoeux19d].
 
 You first need to install this package:
 
@@ -30,16 +33,16 @@ Consider, for instance, the `ionosphere` data. This dataset consists in 351 inst
 
 ```{r}
 data(ionosphere)
-xtr<-ionosphere$x[1:176,]
+xtr<-ionosphere$x[1:176,-2]
 ytr<-ionosphere$y[1:176]
-xtst<-ionosphere$x[177:351,]
+xtst<-ionosphere$x[177:351,-2]
 ytst<-ionosphere$y[177:351]
-
 ```
 
 The EK-NN classifier is implemented as three functions: `EkNNinit` for initialization, `EkNNfit` for training, and `EkNNval` for testing. Let us initialize the classifier and train it on the `ionosphere` data, with $K=5$ neighbors. (If the argument `param` is not passed to `EkNNfit`, the function `EkNNinit` is called inside `EkNNfit`; here, we make the call explicit for clarity).
 
 ```{r}
+set.seed(20221229)
 param0<- EkNNinit(xtr,ytr)
 options=list(maxiter=300,eta=0.1,gain_min=1e-5,disp=FALSE)
 fit<-EkNNfit(xtr,ytr,param=param0,K=5,options=options)
@@ -189,6 +192,126 @@ for(k in 1:c) points(x[y==k,1],x[y==k,2],pch=k)
 ```
 
 The outer region corresponds to the assignment to the unknown class: this hypothesis becomes more plausible when the test vector is far from all the prototypes representing the training data.
+
+
+## RBF neural network classifier
+
+As shown in [@denoeux19d], the calculations performed in the softmax layer of a feedforward neural network can be interpreted in terms of combination of evidence by Dempster's rule. The output class probabilities can be seen as normalized plausibilities according to an underlying belief function. Applying these ideas to a radial basis function (RBF) network, it is possible to derive an alternative evidential classifier with  properties similar to those of the evidential neural network classifier described above [@huang22]. 
+
+As for the EK-NN and evidential neural network classifiers, the RBF classifier is implemented as three functions: `RBFinit` for initialization, `RBFfit` for training and `RBFval` for evaluation. 
+
+Let us demonstrate this method on the `glass` dataset. We initialize a network with 7 prototypes:
+
+```{r}
+param0<-RBFinit(xtr,ytr,nproto=7)
+```
+
+and train this network with regularization coefficient $\lambda=0.001$:
+
+```{r}
+fit<-RBFfit(xtr,ytr,param0,lambda=0.001,control=list(fnscale=-1,maxit=1000))
+```
+
+Finally, we evaluate the performance of the network on the test set:
+
+```{r}
+val<-RBFval(xtst,fit$param,ytst)
+print(val$err)
+table(ytst,val$ypred)
+```
+
+The output mass functions are contained in `val$Belief`:
+
+```{r}
+val$Belief$mass[1:5,]
+val$Belief$pl[1:5,]
+val$Belief$bel[1:5,]
+```
+
+We note that, in contrast with the outputs from evidential k-NN and neural network classifiers, the output mass functions based on weights of evidence have $2^M-1$ focal sets, where $M$ is the number of classes. The focal sets are obtained as
+
+```{r}
+val$Belief$focal
+```
+
+
+## Latent mass functions from neural network classifiers
+
+As shown in [@denoeux19d], logistic regression and multilayer feedforward neural networks can be viewed as converting input or higher-level features into Dempster-Shafer mass functions and aggregating them by Dempster's rule of combination. The probabilistic outputs of these classifiers are the normalized plausibilities corresponding to the underlying combined mass function. This mass function is more informative than the output probability distribution.
+
+Here, we illustrate the computation of mass functions for trained logistic regression and multilayer perceptron classifiers.
+
+### Logistic regression
+
+Let us first consider again the `ionosphere` dataset:
+
+```{r}
+data(ionosphere)
+x<-ionosphere$x[,-2]
+y<-ionosphere$y-1
+```
+
+Let us fit a logistic regression classifier on these data:
+
+```{r,warning=FALSE}
+fit<-glm(y ~ x,family='binomial')
+```
+
+The optimal cofficients (denoted as $\alpha$ and $\beta$ in [@denoeux19d] can be computed using function `calcAB`:
+
+```{r}
+AB<-calcAB(fit$coefficients,colMeans(x))
+```
+
+Using these coefficients, we can then compute the output mass functions and the corresponding contour functions:
+
+```{r}
+Bel<-calcm(x,AB$A,AB$B)
+Bel$focal
+Bel$mass[1:5,]
+Bel$pl[1:5,]
+```
+
+### Multilayer perceptron
+
+Let us now consider again the `glass` dataset:
+
+```{r}
+data(glass)
+M<-max(glass$y)
+d<-ncol(glass$x)
+n<-nrow(glass$x)
+x<-scale(glass$x)
+y<-as.factor(glass$y)
+```
+
+We train a neural network with $J=5$ hidden units, using function `nnet` of package `nnet`, with a regularization coefficient `decay=0.01`:
+
+```{r}
+library(nnet)
+J<-5
+fit<-nnet(y~x,size=J,decay=0.01)
+```
+
+We first need to extract the two layers of weights and to recompute the outputs from the hidden units;
+
+```{r}
+W1<-matrix(fit$wts[1:(J*(d+1))],d+1,J)
+W2<-matrix(fit$wts[(J*(d+1)+1):(J*(d+1) + M*(J+1))],J+1,M)
+a1<-cbind(rep(1,n),x)%*%W1
+o1<-1/(1+exp(-a1))
+```
+
+We can then compute the output mass functions as
+
+```{r}
+AB<-calcAB(W2,colMeans(o1))
+Bel<-calcm(o1,AB$A,AB$B)
+Bel$mass[1:5,]
+Bel$pl[1:5,]
+```
+
+
 
 ## References
 

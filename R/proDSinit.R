@@ -9,26 +9,24 @@
 #'
 #' @param x Input matrix of size n x d, where n is the number of objects and d the number of
 #' attributes.
-#' @param y Vector of class lables (of length n). May be a factor, or a vector of
+#' @param y Vector of class labels (of length n). May be a factor, or a vector of
 #' integers from 1 to M (number of classes).
 #' @param nproto Number of prototypes.
 #' @param nprotoPerClass Boolean. If TRUE, there are \code{nproto} prototypes per class. If
 #' FALSE (default), the total number of prototypes is equal to \code{nproto}.
-#' @param crisp Boolean. If TRUE, the prototypes have full membership to only one class. (Available only is
+#' @param crisp Boolean. If TRUE, the prototypes have full membership to only one class. (Available only if
 #' nprotoPerClass=TRUE).
 #'
-#' @return A list with four elements containg the initialized network parameters
+#' @return A list with four elements containing the initialized network parameters
 #'   \describe{
 #'   \item{alpha}{Vector of length r, where r is the number of prototypes.}
 #'   \item{gamma}{Vector of length r}
-#'   \item{beta}{Matrix of size (r,M), where M is the number fo classes.}
+#'   \item{beta}{Matrix of size (r,M), where M is the number of classes.}
 #'   \item{W}{Matrix of size (r,d), containing the prototype coordinates.}
 #'  }
 #'
 #'@references T. Denoeux. A neural network classifier based on Dempster-Shafer theory.
 #'IEEE Trans. on Systems, Man and Cybernetics A, 30(2):131--150, 2000.
-#'
-#'Available from \url{https://www.hds.utc.fr/~tdenoeux}.
 #'
 #'@author Thierry Denoeux.
 #'

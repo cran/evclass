@@ -4,11 +4,13 @@
 \name{ionosphere}
 \alias{ionosphere}
 \title{Ionosphere dataset}
-\format{A list with two elements:
+\format{
+A list with two elements:
 \describe{
-\item{x}{The 351 x 18 object-attribute matrix.}
+\item{x}{The 351 x 34 object-attribute matrix.}
 \item{y}{A 351-vector containing the class labels.}
-}}
+}
+}
 \usage{
 data(ionosphere)
 }
