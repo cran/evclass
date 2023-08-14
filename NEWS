@@ -1,6 +1,10 @@
 Package: evclass
 Title: Evidential Distance-Based Classification
 
+Changes in version 2.0.1
+
+* Correction of a bug in function kNNfit that created an error when argument 'optimize' was set to 'FALSE'. Correction of a few typos in the documentation.
+
 Changes in version 2.0.0 
 
 * Implementation of radial basis function neural network classifiers.

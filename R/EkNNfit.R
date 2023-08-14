@@ -58,7 +58,8 @@ EkNNfit<-function(x,y,K,param=NULL,alpha=0.95,lambda=1/max(as.numeric(y)),optimi
   if(is.null(param)) param<-EkNNinit(x,y,alpha)
   knn<-get.knn(x,k=K)
   knn$nn.dist<-knn$nn.dist^2
-  if(optimize) opt<-optimds(x,y,param,knn,K,lambda,options)
+  if(optimize) opt<-optimds(x,y,param,knn,K,lambda,options) else
+    opt<-list(param=param,cost=NULL)
   class <- classds(opt$param,knn,y,K)
   return(list(param=opt$param,cost=opt$cost,err=class$err,ypred=class$ypred,m=class$m))
 }

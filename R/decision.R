@@ -13,14 +13,14 @@
 #' @param m Matrix of masses for n test cases. Each row is a mass function. The first M columns
 #' correspond to the mass assigned to each of the M classes. The last column
 #' corresponds to the mass assigned to the whole set of classes.
-#' @param L The loss matrix of dimension (na,M) or (na,M+1), where na is the set
-#' of actions. L[k,j] is the loss incurred of action j is chosen and the true class
-#' if \eqn{\omega_k}. If L has M+1 rows, the last row corresponds to the unknown
+#' @param L The loss matrix of dimension (M,na) or (M+1,na), where na is the number
+#' of actions. L[k,j] is the loss incurred if action j is chosen and the true class
+#' is \eqn{\omega_k}. If L has M+1 rows, the last row corresponds to the unknown
 #' class.
 #' @param rule Decision rule to be used. Must be one of these: 'upper' (upper
 #' expectation), 'lower' (lower expectations), 'pignistic' (pignistic expectation),
 #' 'hurwicz' (weighted sum of the lower and upper expectations).
-#' @param rho Parameter between 0 and 1. Used only is rule='rho'.
+#' @param rho Parameter between 0 and 1. Used only is rule='hurwicz'.
 #'
 #' @return A n-vector with the decisions (integers between 1 and na).
 #'

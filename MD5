@@ -1,7 +1,7 @@
-bc896fbfa18c8dfa008bb34420aa2654 *DESCRIPTION
+29c8e63a22c8242ccd409f661dda1001 *DESCRIPTION
 6790b24eb061e0a2757ffc0b6ab1289d *NAMESPACE
-8504611881f47ba6a34e7dbeddf8c88f *NEWS
-20e7a6ab0a9ac78e13df49728ed1a908 *R/EkNNfit.R
+bafde8ff5d47523d5573e562cbe71340 *NEWS
+2ec1f61cde6ae0c33be6b36ede7b9340 *R/EkNNfit.R
 8a75dcd2452cfc2568b97d7cf5aa2509 *R/EkNNinit.R
 b3ae805ff587677f0f85db934656e618 *R/EkNNval.R
 43809115c93f0384384a42b4885c116d *R/RBFfit.R
@@ -10,7 +10,7 @@ a140a17fda329c08f0fe3e02888f22b9 *R/RBFval.R
 e4463db5f7bd8a6e5280e525c7fdc6e1 *R/calcAB.R
 b8df4757067818998819d1593d48d4eb *R/calcm.R
 52a431a233d5075e603d3b52f9c9782c *R/classds.R
-74fa3762b873029feb0e97aa619ca9b5 *R/decision.R
+ed9bf761b8a4d720279503d8d62139f9 *R/decision.R
 465a6ac9a6509aea23c6189558ac8c5b *R/evclass.R
 81ad4cdbd20ff72081e75407ad5ecf27 *R/foncgradr2n.R
 aeaad4cb6952aa9e16d979f5b01f0950 *R/glass-data.R
@@ -24,13 +24,13 @@ eed1d9363ca4282a760b86ab5507db02 *R/likRBF.R
 cae92c971f8465936fafb9f470c6ddcb *R/proDSinit.R
 4d1cb489665b63f94859dd7850190786 *R/proDSval.R
 a988fc277f3bfdb7f16cd8807d7bec4e *R/vehicles-data.R
-e82bf2c39d041ba53ed772c583cef0fa *build/vignette.rds
+4b9092b8d6be8060afeb5125d005ed5b *build/vignette.rds
 988e27d0f83a7ff327e4f38f089aeefd *data/glass.RData
 b7fa49999b8679c81898cc5262ee0c81 *data/ionosphere.RData
 1665c19c5134e390d23a6f938557c3b5 *data/vehicles.RData
 94ec790381e8ffcea29a5d1374925375 *inst/doc/Introduction.R
 f537dfcc5122e7ea59454396d47fd490 *inst/doc/Introduction.Rmd
-cb6e61cc83f8d66e90eef2b7726aa8ee *inst/doc/Introduction.html
+0a6982fd7b9c2557ed8010a825ace8d4 *inst/doc/Introduction.html
 7d5b309e83bfe2bf0fd12526957e49bd *man/EkNNfit.Rd
 a6992091cf9b0b7c43f6a24152d67ffe *man/EkNNinit.Rd
 272eb56c72a0a2a4423c89bdb0aaff48 *man/EkNNval.Rd
@@ -39,7 +39,7 @@ a0413f313cd3573701d77432fc3378c6 *man/RBFinit.Rd
 350b5087c4c00de48beae327da80e3c4 *man/RBFval.Rd
 ed31462163bb09a0d77e9218f3bcf245 *man/calcAB.Rd
 7b0a465317d856d04d6f19fe6db6508d *man/calcm.Rd
-85c009ffaebbe5ce782919bf19edee0b *man/decision.Rd
+f11c46dc6e3d938f53d8a3cf68f099d4 *man/decision.Rd
 285c9b9cf4611ffa362283b7df53e8d8 *man/evclass.Rd
 d17e8b2053c1890589eb7d0d50ec02df *man/glass.Rd
 1626e0411f197760193fb134b67f0ca4 *man/ionosphere.Rd
