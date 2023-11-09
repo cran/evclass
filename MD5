@@ -1,6 +1,6 @@
-29c8e63a22c8242ccd409f661dda1001 *DESCRIPTION
+544fb8525cda8bfb575721b9036f4fe3 *DESCRIPTION
 6790b24eb061e0a2757ffc0b6ab1289d *NAMESPACE
-bafde8ff5d47523d5573e562cbe71340 *NEWS
+61bd69c1bd128e106b12fe9dc98fcbc9 *NEWS
 2ec1f61cde6ae0c33be6b36ede7b9340 *R/EkNNfit.R
 8a75dcd2452cfc2568b97d7cf5aa2509 *R/EkNNinit.R
 b3ae805ff587677f0f85db934656e618 *R/EkNNval.R
@@ -11,7 +11,7 @@ e4463db5f7bd8a6e5280e525c7fdc6e1 *R/calcAB.R
 b8df4757067818998819d1593d48d4eb *R/calcm.R
 52a431a233d5075e603d3b52f9c9782c *R/classds.R
 ed9bf761b8a4d720279503d8d62139f9 *R/decision.R
-465a6ac9a6509aea23c6189558ac8c5b *R/evclass.R
+2a5054328d0a978aa337b97590d4f9d1 *R/evclass.R
 81ad4cdbd20ff72081e75407ad5ecf27 *R/foncgradr2n.R
 aeaad4cb6952aa9e16d979f5b01f0950 *R/glass-data.R
 80f1bca460dff885ae5265b47c9f6e1d *R/gradRBF.R
@@ -30,7 +30,7 @@ b7fa49999b8679c81898cc5262ee0c81 *data/ionosphere.RData
 1665c19c5134e390d23a6f938557c3b5 *data/vehicles.RData
 94ec790381e8ffcea29a5d1374925375 *inst/doc/Introduction.R
 f537dfcc5122e7ea59454396d47fd490 *inst/doc/Introduction.Rmd
-0a6982fd7b9c2557ed8010a825ace8d4 *inst/doc/Introduction.html
+fc397c43898e46b08efe8d2f0f6cb65f *inst/doc/Introduction.html
 7d5b309e83bfe2bf0fd12526957e49bd *man/EkNNfit.Rd
 a6992091cf9b0b7c43f6a24152d67ffe *man/EkNNinit.Rd
 272eb56c72a0a2a4423c89bdb0aaff48 *man/EkNNval.Rd
